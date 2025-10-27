@@ -5,10 +5,12 @@ const app = express();
 
 import {userRouter} from "./routes/user.js";
 import {courseRouter} from "./routes/course.js";
+import {adminRouter} from "./routes/admin.js";
 
-app.use(express.json());
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/course", courseRouter);
+app.use("/api/v1/admin", adminRouter);
 
-app.use("/user", userRouter);
-app.use("/course", courseRouter);
+
 
 app.listen(3000);
