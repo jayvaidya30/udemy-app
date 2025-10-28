@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-console.log("connected to");
-mongoose.connect("mongodb+srv://jayvaidya30:mivuqizBVpvXxegM@cluster0.86xlhas.mongodb.net/udemy-app");
+
 const {Schema, model} = mongoose;
 const ObjectId = Schema.Types.ObjectId;
 
