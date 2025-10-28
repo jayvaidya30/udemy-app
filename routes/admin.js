@@ -1,6 +1,6 @@
 import Router from "express";
-
 const adminRouter = Router();
+import { Admin } from "../db.js";
 
 adminRouter.post("/signup", function (Req, res) {});
 
