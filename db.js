@@ -16,30 +16,30 @@ const adminSchema = new Schema({
     firstName: String,
     secondName: String
 })
-const Admin = mongoose.model("Admin", adminSchema);
+const AdminModel = mongoose.model("AdminModel", adminSchema);
 
 const courseSchema = new Schema({
     title: String,
     description: String,
     price: Number,
     imageUrl: String,
-    creatorId: {type: ObjectId, ref: Admin},
+    creatorId: {type: ObjectId, ref: AdminModel},
 })
-const Course = mongoose.model("Course", courseSchema);
+const CourseModel = mongoose.model("CourseModel", courseSchema);
 
 const purchaseSchema = new Schema({
     userId: ObjectId,
-    courseId: {type: ObjectId, ref: Course}
+    courseId: {type: ObjectId, ref: CourseModel}
 })
 
 
-const User = mongoose.model("User", userSchema);
-const Purchase = mongoose.model("Purchase", purchaseSchema); 
+const UserModel = mongoose.model("UserModel", userSchema);
+const PurchaseModel = mongoose.model("PurchaseModel", purchaseSchema); 
 
 
 export {
-    User,
-    Admin,
-    Course,
-    Purchase
+    UserModel,
+    AdminModel,
+    CourseModel,
+    PurchaseModel
 };
