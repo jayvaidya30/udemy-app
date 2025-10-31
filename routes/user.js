@@ -2,23 +2,8 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { UserModel } from "../db.js";
+import { JWT_USER_SECRET } from "../config.js";
 const userRouter = express.Router();
-const JWT_USER_SECRET = "SECRET@USER";
-
-//Auth middleware
-async function auth(req, res, next) {
-  const token = req.headers.token;
-  const decodedToken = jwt.verify(token, JWT_SECRET);
-  
-  console.log(decodedToken);
-  if (token === decodedToken) {
-    next();
-  } else {
-    res.json({
-      message: "Please sign in!"
-    })
-  }
-}
 
 userRouter.post("/signup", async function (req, res) {
   const email = req.body.email;
@@ -55,22 +40,22 @@ userRouter.post("/signin", async function (req, res) {
   const email = req.body.email;
   const password = req.body.password;
 
-  const response = await UserModel.findOne({
+  const user = await UserModel.findOne({
     email,
   });
 
-  if (!response) {
+  if (!user) {
     message: "User does not exists, Please signup!";
   }
 
-  const hashedpassword = await bcrypt.compare(password, response.password);
+  const hashedpassword = await bcrypt.compare(password, user.password);
 
   if (hashedpassword) {
     const token = jwt.sign(
       {
-        id: response._id.toString(),
+        id: user._id.toString(),
       },
-      JWT_SECRET
+      JWT_USER_SECRET
     );
     console.log(token);
     res.json({
@@ -83,7 +68,7 @@ userRouter.post("/signin", async function (req, res) {
   }
 });
 
-userRouter.get("/purchases", auth, function (req, res) {
+userRouter.get("/purchases",function (req, res) {
   res.json({
     message: "purchases!!",
   });
