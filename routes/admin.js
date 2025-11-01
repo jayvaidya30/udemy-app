@@ -110,8 +110,40 @@ adminRouter.post("/course", adminMiddleware, async function (req, res) {
   })
 });
 
-adminRouter.put("/", function (req, res) {});
+adminRouter.put("/course", adminMiddleware, async function (req, res) {
+  const adminId = req.userId;
 
-adminRouter.get("/bulk", function (req, res) {});
+  const { title, description, price, imageUrl, courseId } = req.body;
+
+  //creating a web3 saas in 6 hours video to see how to let user add image or video rather than using getting the url
+  const course = await CourseModel.updateOne({
+    _id: courseId,
+    creatorId: adminId
+  },{
+    title,
+    description,
+    price,
+    imageUrl,
+  });
+
+  res.json({
+    message:"Course updated",
+    courseId: course._id
+  })
+
+});
+
+adminRouter.get("/course/bulk", adminMiddleware, async function (req, res) {
+  const adminId = req.userId;
+
+  const courses = await CourseModel.find({
+    creatorId: adminId
+  })
+
+  res.json({
+    message: "Courses fetched!",
+    courses
+  })
+});
 
 export { adminRouter };
