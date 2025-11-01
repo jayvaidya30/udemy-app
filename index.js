@@ -17,7 +17,7 @@ app.use("/api/v1/admin", adminRouter);
 
 async function main() {
     // add dot env
-  await mongoose.connect("mongodb+srv://jayvaidya30:mivuqizBVpvXxegM@cluster0.86xlhas.mongodb.net/udemy-app");
+  await mongoose.connect(process.env.MONGO_URL);
   app.listen(3000);
   console.log("Listening on port 3000!");
 }
